@@ -1,5 +1,5 @@
 {
-  "name": "proyecto-backend",
+  "name": "gym-backend",
   "private": true,
   "version": "0.1.0",
   "description": "A Strapi application",
@@ -9,14 +9,13 @@
     "build": "strapi build",
     "strapi": "strapi"
   },
+  "devDependencies": {},
   "dependencies": {
-    "@strapi/plugin-cloud": "4.24.3",
-    "@strapi/plugin-i18n": "4.24.3",
-    "@strapi/plugin-users-permissions": "4.24.3",
-    "@strapi/strapi": "4.24.3",
+    "@strapi/strapi": "4.24.4",
+    "@strapi/plugin-users-permissions": "4.24.4",
+    "@strapi/plugin-i18n": "4.24.4",
+    "@strapi/plugin-cloud": "4.24.4",
     "better-sqlite3": "8.6.0",
-    "pg": "^8.11.5",
-    "pg-connection-string": "^2.6.4",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "5.3.4",
@@ -26,7 +25,7 @@
     "name": "A Strapi developer"
   },
   "strapi": {
-    "uuid": "ae14d309-8648-4528-8207-9d7608359db4"
+    "uuid": "3baf89f1-266a-4e82-8e88-5aab5bc4c830"
   },
   "engines": {
     "node": ">=18.0.0 <=20.x.x",
