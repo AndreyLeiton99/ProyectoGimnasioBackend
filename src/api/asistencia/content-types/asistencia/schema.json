@@ -32,10 +32,10 @@
       "target": "api::curso.curso",
       "inversedBy": "asistencias"
     },
-    "usuario": {
+    "user": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::usuario.usuario",
+      "target": "plugin::users-permissions.user",
       "inversedBy": "asistencias"
     }
   }

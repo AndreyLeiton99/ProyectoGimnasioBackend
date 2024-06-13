@@ -362,6 +362,146 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiAsistenciaAsistencia extends Schema.CollectionType {
+  collectionName: 'asistencias';
+  info: {
+    singularName: 'asistencia';
+    pluralName: 'asistencias';
+    displayName: 'Asistencia';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    date: Attribute.DateTime & Attribute.Required;
+    status: Attribute.Enumeration<['presente', 'ausente', 'excluido']> &
+      Attribute.Required &
+      Attribute.DefaultTo<'ausente'>;
+    curso: Attribute.Relation<
+      'api::asistencia.asistencia',
+      'manyToOne',
+      'api::curso.curso'
+    >;
+    user: Attribute.Relation<
+      'api::asistencia.asistencia',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::asistencia.asistencia',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::asistencia.asistencia',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiCursoCurso extends Schema.CollectionType {
+  collectionName: 'cursos';
+  info: {
+    singularName: 'curso';
+    pluralName: 'cursos';
+    displayName: 'Curso';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    nombreCurso: Attribute.String & Attribute.Required;
+    description: Attribute.Text;
+    date: Attribute.DateTime;
+    capacity: Attribute.Integer & Attribute.Required;
+    students: Attribute.Relation<
+      'api::curso.curso',
+      'manyToMany',
+      'api::usuario.usuario'
+    >;
+    profesor: Attribute.Relation<
+      'api::curso.curso',
+      'manyToOne',
+      'api::usuario.usuario'
+    >;
+    asistencias: Attribute.Relation<
+      'api::curso.curso',
+      'oneToMany',
+      'api::asistencia.asistencia'
+    >;
+    professor: Attribute.Relation<
+      'api::curso.curso',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::curso.curso',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::curso.curso',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiUsuarioUsuario extends Schema.CollectionType {
+  collectionName: 'usuarios';
+  info: {
+    singularName: 'usuario';
+    pluralName: 'usuarios';
+    displayName: 'Usuario';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    firstName: Attribute.String & Attribute.Required;
+    email: Attribute.Email & Attribute.Required & Attribute.Unique;
+    password: Attribute.Password & Attribute.Required;
+    lastName: Attribute.String & Attribute.Required;
+    role: Attribute.Enumeration<['client', 'admin']> &
+      Attribute.Required &
+      Attribute.DefaultTo<'client'>;
+    cursos: Attribute.Relation<
+      'api::usuario.usuario',
+      'oneToMany',
+      'api::curso.curso'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::usuario.usuario',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::usuario.usuario',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -695,7 +835,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     username: Attribute.String &
@@ -723,6 +862,16 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'plugin::users-permissions.user',
       'manyToOne',
       'plugin::users-permissions.role'
+    >;
+    cursos: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::curso.curso'
+    >;
+    asistencias: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::asistencia.asistencia'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -788,146 +937,6 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
-export interface ApiAsistenciaAsistencia extends Schema.CollectionType {
-  collectionName: 'asistencias';
-  info: {
-    singularName: 'asistencia';
-    pluralName: 'asistencias';
-    displayName: 'Asistencia';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    date: Attribute.DateTime & Attribute.Required;
-    status: Attribute.Enumeration<['presente', 'ausente', 'excluido']> &
-      Attribute.Required &
-      Attribute.DefaultTo<'ausente'>;
-    curso: Attribute.Relation<
-      'api::asistencia.asistencia',
-      'manyToOne',
-      'api::curso.curso'
-    >;
-    usuario: Attribute.Relation<
-      'api::asistencia.asistencia',
-      'manyToOne',
-      'api::usuario.usuario'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::asistencia.asistencia',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::asistencia.asistencia',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiCursoCurso extends Schema.CollectionType {
-  collectionName: 'cursos';
-  info: {
-    singularName: 'curso';
-    pluralName: 'cursos';
-    displayName: 'Curso';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    nombreCurso: Attribute.String & Attribute.Required;
-    description: Attribute.Text;
-    date: Attribute.DateTime;
-    capacity: Attribute.Integer & Attribute.Required;
-    students: Attribute.Relation<
-      'api::curso.curso',
-      'manyToMany',
-      'api::usuario.usuario'
-    >;
-    profesor: Attribute.Relation<
-      'api::curso.curso',
-      'manyToOne',
-      'api::usuario.usuario'
-    >;
-    asistencias: Attribute.Relation<
-      'api::curso.curso',
-      'oneToMany',
-      'api::asistencia.asistencia'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::curso.curso',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::curso.curso',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiUsuarioUsuario extends Schema.CollectionType {
-  collectionName: 'usuarios';
-  info: {
-    singularName: 'usuario';
-    pluralName: 'usuarios';
-    displayName: 'Usuario';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    firstName: Attribute.String & Attribute.Required;
-    email: Attribute.Email & Attribute.Required & Attribute.Unique;
-    password: Attribute.Password & Attribute.Required;
-    lastName: Attribute.String & Attribute.Required;
-    role: Attribute.Enumeration<['client', 'admin']> &
-      Attribute.Required &
-      Attribute.DefaultTo<'client'>;
-    cursos: Attribute.Relation<
-      'api::usuario.usuario',
-      'oneToMany',
-      'api::curso.curso'
-    >;
-    asistencias: Attribute.Relation<
-      'api::usuario.usuario',
-      'oneToMany',
-      'api::asistencia.asistencia'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::usuario.usuario',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::usuario.usuario',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -938,6 +947,9 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::asistencia.asistencia': ApiAsistenciaAsistencia;
+      'api::curso.curso': ApiCursoCurso;
+      'api::usuario.usuario': ApiUsuarioUsuario;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -946,9 +958,6 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
-      'api::asistencia.asistencia': ApiAsistenciaAsistencia;
-      'api::curso.curso': ApiCursoCurso;
-      'api::usuario.usuario': ApiUsuarioUsuario;
     }
   }
 }
