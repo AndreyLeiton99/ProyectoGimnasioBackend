@@ -425,12 +425,7 @@ export interface ApiCursoCurso extends Schema.CollectionType {
     students: Attribute.Relation<
       'api::curso.curso',
       'manyToMany',
-      'api::usuario.usuario'
-    >;
-    profesor: Attribute.Relation<
-      'api::curso.curso',
-      'manyToOne',
-      'api::usuario.usuario'
+      'plugin::users-permissions.user'
     >;
     asistencias: Attribute.Relation<
       'api::curso.curso',
@@ -453,48 +448,6 @@ export interface ApiCursoCurso extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::curso.curso',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiUsuarioUsuario extends Schema.CollectionType {
-  collectionName: 'usuarios';
-  info: {
-    singularName: 'usuario';
-    pluralName: 'usuarios';
-    displayName: 'Usuario';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    firstName: Attribute.String & Attribute.Required;
-    email: Attribute.Email & Attribute.Required & Attribute.Unique;
-    password: Attribute.Password & Attribute.Required;
-    lastName: Attribute.String & Attribute.Required;
-    role: Attribute.Enumeration<['client', 'admin']> &
-      Attribute.Required &
-      Attribute.DefaultTo<'client'>;
-    cursos: Attribute.Relation<
-      'api::usuario.usuario',
-      'oneToMany',
-      'api::curso.curso'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::usuario.usuario',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::usuario.usuario',
       'oneToOne',
       'admin::user'
     > &
@@ -949,7 +902,6 @@ declare module '@strapi/types' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'api::asistencia.asistencia': ApiAsistenciaAsistencia;
       'api::curso.curso': ApiCursoCurso;
-      'api::usuario.usuario': ApiUsuarioUsuario;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
