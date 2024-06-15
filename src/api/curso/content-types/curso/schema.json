@@ -29,7 +29,13 @@
     "students": {
       "type": "relation",
       "relation": "manyToMany",
-      "target": "plugin::users-permissions.user",
+      "target": "api::usuario.usuario",
+      "inversedBy": "cursos"
+    },
+    "profesor": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::usuario.usuario",
       "inversedBy": "cursos"
     },
     "asistencias": {

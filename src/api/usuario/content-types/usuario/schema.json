@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "usuarios",
+  "info": {
+    "singularName": "usuario",
+    "pluralName": "usuarios",
+    "displayName": "Usuario",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "firstName": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true,
+      "unique": true
+    },
+    "password": {
+      "type": "password",
+      "required": true
+    },
+    "lastName": {
+      "type": "string",
+      "required": true
+    },
+    "role": {
+      "type": "enumeration",
+      "enum": [
+        "client",
+        "admin"
+      ],
+      "required": true,
+      "default": "client"
+    },
+    "cursos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::curso.curso",
+      "mappedBy": "profesor"
+    }
+  }
+}
