@@ -425,12 +425,7 @@ export interface ApiCursoCurso extends Schema.CollectionType {
     students: Attribute.Relation<
       'api::curso.curso',
       'manyToMany',
-      'api::usuario.usuario'
-    >;
-    profesor: Attribute.Relation<
-      'api::curso.curso',
-      'manyToOne',
-      'api::usuario.usuario'
+      'plugin::users-permissions.user'
     >;
     asistencias: Attribute.Relation<
       'api::curso.curso',
@@ -479,11 +474,6 @@ export interface ApiUsuarioUsuario extends Schema.CollectionType {
     role: Attribute.Enumeration<['client', 'admin']> &
       Attribute.Required &
       Attribute.DefaultTo<'client'>;
-    cursos: Attribute.Relation<
-      'api::usuario.usuario',
-      'oneToMany',
-      'api::curso.curso'
-    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
