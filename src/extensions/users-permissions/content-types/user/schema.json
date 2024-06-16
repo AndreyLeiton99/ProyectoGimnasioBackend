@@ -65,11 +65,17 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "cursos": {
+    "cursos_impartidos": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::curso.curso",
       "mappedBy": "professor"
+    },
+    "cursos": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::curso.curso",
+      "mappedBy": "students"
     },
     "asistencias": {
       "type": "relation",

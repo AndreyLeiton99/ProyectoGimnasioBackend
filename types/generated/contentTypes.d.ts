@@ -853,9 +853,14 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
-    cursos: Attribute.Relation<
+    cursos_impartidos: Attribute.Relation<
       'plugin::users-permissions.user',
       'oneToMany',
+      'api::curso.curso'
+    >;
+    cursos: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'manyToMany',
       'api::curso.curso'
     >;
     asistencias: Attribute.Relation<
